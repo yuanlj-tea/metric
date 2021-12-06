@@ -1,0 +1,21 @@
+{
+    "name": "yuanlj-tea/metric",
+    "description": "metric component",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Metric\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "yuanlj",
+            "email": "1107806823@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "endclothing/prometheus_client_php": "^1.0"
+    }
+}
