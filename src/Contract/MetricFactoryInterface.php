@@ -31,5 +31,5 @@ interface MetricFactoryInterface
     /**
      * handle the metric collecting/reporting/serving tasks
      */
-    public function handle(): void;
+    public function handle(int $returnHeader = 0): void;
 }

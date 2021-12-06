@@ -53,11 +53,11 @@ class MetricFactory implements MetricFactoryInterface
         return new Histogram($this->registry, $this->getNamespace(), $name, 'measure ' . str_replace('_', ' ', $name), $labelNames);
     }
 
-    public function handle(): void
+    public function handle(int $returnHeader = 0): void
     {
         switch ($this->config['metric'][$this->name]['mode']) {
             case Constants::SCRAPE_MODE:
-                $this->scrapeHandle();
+                $this->scrapeHandle($returnHeader);
                 break;
             case Constants::PUSH_MODE:
                 $this->pushHandle();
@@ -76,7 +76,7 @@ class MetricFactory implements MetricFactoryInterface
     /**
      * scape mode handle
      */
-    protected function scrapeHandle()
+    protected function scrapeHandle($returnHeader)
     {
         $host = $this->config['metric'][$this->name]['scrape_host'];
         $port = $this->config['metric'][$this->name]['scrape_port'];
@@ -84,15 +84,19 @@ class MetricFactory implements MetricFactoryInterface
 
         $render = new RenderTextFormat();
         $result = $render->render($this->registry->getMetricFamilySamples());
-        if (extension_loaded('swoole')) {
+        if (extension_loaded('swoole') && $this->isCli()) {
             $server = new Server($host, (int)$port, false);
             $server->handle($path, function ($request, $response) use ($render) {
                 $response->header('Content-Type', RenderTextFormat::MIME_TYPE);
                 $response->end($result);
             });
         } else {
-            header('Content-Type: ' . RenderTextFormat::MIME_TYPE);
-            echo $result;
+            if ($returnHeader) {
+                header('Content-Type: ' . RenderTextFormat::MIME_TYPE);
+                echo $result;
+            } else {
+                echo $result;
+            }
         }
     }
 
@@ -138,5 +142,10 @@ class MetricFactory implements MetricFactoryInterface
             $this->doRequest("{$host}:{$port}", $this->getNamespace(), 'put');
             sleep($interval);
         }
+    }
+
+    public function isCli()
+    {
+        return preg_match("/cli/i", php_sapi_name()) ? true : false;
     }
 }

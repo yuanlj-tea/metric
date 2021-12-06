@@ -48,8 +48,8 @@ class Metric
         return $func(...$args);
     }
 
-    public function show()
+    public function show(int $returnHeader = 0)
     {
-        self::$metric->handle();
+        self::$metric->handle($returnHeader);
     }
 }
