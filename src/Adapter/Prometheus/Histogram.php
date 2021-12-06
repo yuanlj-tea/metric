@@ -29,7 +29,7 @@ class Histogram implements HistogramInterface
     }
 
 
-    public function with(float ...$labelValues): HistogramInterface
+    public function with(string ...$labelValues): HistogramInterface
     {
         $this->labelValues = $labelValues;
         return $this;
