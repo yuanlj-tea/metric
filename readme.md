@@ -15,7 +15,7 @@ composer require yuanlj-tea/metric
 /publish/metric.php
 
 配置文件内容：
-		'default' => 'prometheus',  // 配置使用的适配器
+    'default' => 'prometheus',  // 配置使用的适配器
     'default_metric_interval' => 5,
     'metric' => [
         'prometheus' => [
@@ -48,7 +48,9 @@ useage demo
 
 namespace Metric;
 
+use Metric\Timer;
 use Metric\Contract\MetricFactoryInterface;
+use Metric\MetricFactory;
 
 class Metric
 {
