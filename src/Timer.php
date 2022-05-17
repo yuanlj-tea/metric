@@ -36,12 +36,12 @@ class Timer
      */
     protected $metric;
 
-    public function __construct(MetricFactoryInterface $metricFactory, string $name = '', ?array $default = [])
+    public function __construct(MetricFactoryInterface $metricFactory, string $name = '', ?array $default = [], $time = null)
     {
         $this->metric = $metricFactory;
         $this->name = $name;
         $this->labels = $default;
-        $this->time = microtime(true);
+        $this->time = !empty($time) ? $time : microtime(true);
     }
 
     public function __destruct()
@@ -52,7 +52,7 @@ class Timer
     /**
      * @param array|null $labels
      */
-    public function end(?array $labels = []): void
+    public function end(?array $labels = [], $bucket = null): void
     {
         if ($this->ended) {
             return;
@@ -65,7 +65,7 @@ class Timer
         }
 
         $historm = $this->metric
-            ->makeHistogram($this->name, array_keys($this->labels))
+            ->makeHistogram($this->name, array_keys($this->labels), $bucket)
             ->with(...array_values($this->labels));
         $d = (float)microtime(true) - $this->time;
         if ($d < 0) {

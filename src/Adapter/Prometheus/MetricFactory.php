@@ -48,9 +48,9 @@ class MetricFactory implements MetricFactoryInterface
         return new Gauge($this->registry, $this->getNamespace(), $name, 'gauge ' . str_replace('_', ' ', $name), $labelNames);
     }
 
-    public function makeHistogram(string $name, ?array $labelNames = []): HistogramInterface
+    public function makeHistogram(string $name, ?array $labelNames = [], $buckets = null): HistogramInterface
     {
-        return new Histogram($this->registry, $this->getNamespace(), $name, 'measure ' . str_replace('_', ' ', $name), $labelNames);
+        return new Histogram($this->registry, $this->getNamespace(), $name, 'measure ' . str_replace('_', ' ', $name), $labelNames, $buckets);
     }
 
     public function handle(int $returnHeader = 0): void

@@ -26,7 +26,7 @@ interface MetricFactoryInterface
      * @param array|null $labelNames label of metric
      * @return HistogramInterface
      */
-    public function makeHistogram(string $name, ?array $labelNames = []): HistogramInterface;
+    public function makeHistogram(string $name, ?array $labelNames = [], $buckets = null): HistogramInterface;
 
     /**
      * handle the metric collecting/reporting/serving tasks

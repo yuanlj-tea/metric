@@ -35,9 +35,9 @@ class Metric
             ->set($value);
     }
 
-    public function put(string $name, float $sample, ?array $labels = [])
+    public function put(string $name, float $sample, ?array $labels = [], $buckets = null)
     {
-        self::$metric->makeHistogram($name, array_keys($labels))
+        self::$metric->makeHistogram($name, array_keys($labels), $buckets)
             ->with(...array_values($labels))
             ->put($sample);
     }

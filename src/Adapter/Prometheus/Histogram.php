@@ -22,10 +22,10 @@ class Histogram implements HistogramInterface
      */
     protected $labelValues = [];
 
-    public function __construct(CollectorRegistry $registry, string $namespace, string $name, string $help, array $labels)
+    public function __construct(CollectorRegistry $registry, string $namespace, string $name, string $help, array $labels, $buckets = null)
     {
         $this->registry = $registry;
-        $this->histogram = $registry->getOrRegisterHistogram($namespace, $name, $help, $labels);
+        $this->histogram = $registry->getOrRegisterHistogram($namespace, $name, $help, $labels, $buckets);
     }
 
 
