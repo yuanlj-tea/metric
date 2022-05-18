@@ -42,9 +42,9 @@ class Metric
             ->put($sample);
     }
 
-    public function time(string $name, callable $func, ?array $args = [], ?array $labels = [])
+    public function time(string $name, callable $func, ?array $args = [], ?array $labels = [], $time = null)
     {
-        $timer = new Timer(self::$metric, $name, $labels);
+        $timer = new Timer(self::$metric, $name, $labels, $time);
         return $func(...$args);
     }
 
