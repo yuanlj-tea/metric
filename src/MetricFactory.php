@@ -34,7 +34,10 @@ class MetricFactory
                     case 'redis':
                         $redisCfg = self::$config['redis'];
                         Redis::setDefaultOptions($redisCfg);
-
+                        // 设置存到redis里的key的前缀
+                        if (isset($cfg['redis_prefix']) && !empty($cfg['redis_prefix'])) {
+                            Redis::setPrefix($cfg['redis_prefix']);
+                        }
                         $storageAdapter = new Redis();
                         break;
                     case 'apc':

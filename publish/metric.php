@@ -8,6 +8,7 @@ return [
             'driver' => \Metric\Adapter\Prometheus\MetricFactory::class,
             'mode' => \Metric\Adapter\Prometheus\Constants::SCRAPE_MODE,
             'storage_adapter' => 'redis',
+            'redis_prefix' => '', // 存到redis里的key的前缀
             'namespace' => 'app-name',
             'scrape_host' => '0.0.0.0',
             'scrape_port' => '9502',
