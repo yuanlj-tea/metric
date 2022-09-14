@@ -16,6 +16,8 @@
     ],
     "require": {
         "php": ">=7.1",
-        "endclothing/prometheus_client_php": "^1.0"
+        "promphp/prometheus_client_php": "^2.4",
+        "ext-redis": "*",
+        "ext-json": "*"
     }
 }
